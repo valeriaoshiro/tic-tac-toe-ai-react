@@ -7,7 +7,7 @@
 
 .board {
   width: 25%;
-  height: 400px;
+  /*height: 400px;*/
   margin: 0 auto;
 }
 
@@ -15,4 +15,13 @@
   content: '';
   display: block;
   clear: both;
+}
+
+.button {
+  margin-top: 20px;
+  background: #48494B;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	padding: 10px 25px;
 }
