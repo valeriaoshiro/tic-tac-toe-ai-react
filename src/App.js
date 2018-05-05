@@ -31,15 +31,18 @@ class App extends Component {
               index={i}
               onClick={this.handleClick}
               turn={this.state.turn}
+              key={i}
             />
     })
     return (
       <div className="App">
         <h1>Unbetable Tic Tac Toe</h1>
-        {squares}
+        <div className="board">
+          {squares}
+        </div>
         {/*<ResetButton />
         <Message />*/}
-        <button onClick={this.handleReset}>Reset</button>
+        <br/><button onClick={this.handleReset}>Reset</button>
         <h2></h2>
       </div>
     );

@@ -1,0 +1,9 @@
+.Square {
+	width: calc(33.33% - 2px);
+    float: left;
+	height: 100px;
+	display: inline-block;
+	font-size: 3em;
+	line-height: 10px;
+    border: 1px solid black;
+}
