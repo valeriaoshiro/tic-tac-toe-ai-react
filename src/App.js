@@ -130,14 +130,8 @@ class App extends Component {
             var move = {};
             move.index = newBoard[spot];
             newBoard[spot] = newTurn;
-
-            if (newTurn === 'O') {
-                let g = this.minimax(newBoard, 'X');
-                move.score = g.score;
-            } else {
-                let g = this.minimax(newBoard, 'O');
-                move.score = g.score;
-            }
+            let g = newTurn === 'O' ? this.minimax(newBoard, 'X') : this.minimax(newBoard, 'O');
+            move.score = g.score;
             newBoard[spot] = move.index;
             moves.push(move);
         });
