@@ -21,17 +21,20 @@ class App extends Component {
       let newBoard = this.state.board.slice();
       let newTurn = 'X';
       newBoard[index] = newTurn;
-
-      if(!this.winningComb(newBoard, newTurn) && this.availableSpots(newBoard).length === 0){
-        this.setState({turn: newTurn, board: newBoard, message: "It's a tie"})
-      } else if(this.winningComb(newBoard, newTurn)) {
-        this.setState({turn: newTurn, board: newBoard, message: 'You won'});
-      } else {
-        this.setState({board: newBoard, turn: "O"}, this.compTurn);
-      }
+      this.updateTurn(newBoard, newTurn);
     }
   }
 
+  updateTurn(newBoard, newTurn){
+    if(!this.winningComb(newBoard, newTurn) && this.availableSpots(newBoard).length === 0){
+      this.setState({turn: newTurn, board: newBoard, message: "It's a tie"})
+    } else if(this.winningComb(newBoard, newTurn)) {
+      this.setState({turn: newTurn, board: newBoard, message: newTurn === 'O' ? 'You lost' : 'You won'});
+    } else {
+      newTurn === 'O' ? this.setState({board: newBoard, turn: 'X'}) : this.setState({board: newBoard, turn: 'O'}, this.compTurn);
+    }
+  }
+  
 	clickDummy(){}
 
   winningComb(newBoard, newTurn){
@@ -57,16 +60,8 @@ class App extends Component {
     let newBoard = this.state.board.slice();
     let newTurn = 'O';
 		let spot = this.minimax(newBoard, newTurn).index;
-		
-      newBoard[spot] = newTurn;
-			this.setState({board: newBoard});
-			if(!this.winningComb(newBoard, newTurn) && this.availableSpots(newBoard).length === 0){
-        this.setState({turn: newTurn, board: newBoard, message: "It's a tie"})
-      } else if(this.winningComb(newBoard, newTurn)) {
-        this.setState({turn: newTurn, board: newBoard, message: 'You lost'});
-      } else {
-        this.setState({board: newBoard, turn: "X"})
-      }
+    newBoard[spot] = newTurn;
+    this.updateTurn(newBoard, newTurn);
 	}
 
   minimax(newBoard, newTurn){	
