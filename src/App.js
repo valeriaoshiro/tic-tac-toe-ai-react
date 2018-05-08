@@ -26,10 +26,10 @@ class App extends Component {
   }
 
   updateTurn(newBoard, newTurn){
-    if(!this.winningComb(newBoard, newTurn) && this.availableSpots(newBoard).length === 0){
-      this.setState({turn: newTurn, board: newBoard, message: "It's a tie"})
-    } else if(this.winningComb(newBoard, newTurn)) {
+    if(this.winningComb(newBoard, newTurn)) {
       this.setState({turn: newTurn, board: newBoard, message: newTurn === 'O' ? 'You lost' : 'You won'});
+    } else if(!this.winningComb(newBoard, newTurn) && this.availableSpots(newBoard).length === 0){
+      this.setState({turn: newTurn, board: newBoard, message: 'It\'s a tie'})
     } else {
       newTurn === 'O' ? this.setState({board: newBoard, turn: 'X'}) : this.setState({board: newBoard, turn: 'O'}, this.compTurn);
     }
@@ -38,22 +38,51 @@ class App extends Component {
 	clickDummy(){}
 
   winningComb(newBoard, newTurn){
-		if(newBoard[0] === newBoard[1] && newBoard[0] === newBoard[2] && newBoard[0] === newTurn ||
-		   newBoard[3] === newBoard[4] && newBoard[3] === newBoard[5] && newBoard[3] === newTurn ||
-		   newBoard[6] === newBoard[7] && newBoard[6] === newBoard[8] && newBoard[6] === newTurn || 
-		   newBoard[0] === newBoard[3] && newBoard[0] === newBoard[6] && newBoard[0] === newTurn ||
-		   newBoard[1] === newBoard[4] && newBoard[1] === newBoard[7] && newBoard[1] === newTurn ||
-		   newBoard[2] === newBoard[5] && newBoard[2] === newBoard[8] && newBoard[2] === newTurn ||
-		   newBoard[0] === newBoard[4] && newBoard[0] === newBoard[8] && newBoard[0] === newTurn ||
-		   newBoard[2] === newBoard[4] && newBoard[2] === newBoard[6] && newBoard[2] === newTurn){
-			return true;
-		} else {
-			return false;
-		}
+		return (
+		  this.horizontalTop(newBoard, newTurn) 
+		  || this.horizontalMiddle(newBoard, newTurn)
+		  || this.horizontalBottom(newBoard, newTurn)
+		  || this.verticalLeft(newBoard, newTurn)
+		  || this.verticalMiddle(newBoard, newTurn)
+		  || this.verticalRight(newBoard, newTurn)
+		  || this.diagonal1(newBoard, newTurn)
+		  || this.diagonal2(newBoard, newTurn)) ? true : false;
+	}
+	
+	horizontalTop(newBoard, newTurn){
+	  return newBoard[0] === newBoard[1] && newBoard[0] === newBoard[2] && newBoard[0] === newTurn ? true : false;
+	}
+	
+	horizontalMiddle(newBoard, newTurn){
+	  return newBoard[3] === newBoard[4] && newBoard[3] === newBoard[5] && newBoard[3] === newTurn ? true : false;
+	}
+	
+	horizontalBottom(newBoard, newTurn){
+	  return newBoard[6] === newBoard[7] && newBoard[6] === newBoard[8] && newBoard[6] === newTurn ? true : false;
+	}
+	
+	verticalLeft(newBoard, newTurn){
+	  return newBoard[0] === newBoard[3] && newBoard[0] === newBoard[6] && newBoard[0] === newTurn ? true : false;
+	}
+	
+	verticalMiddle(newBoard, newTurn){
+	  return newBoard[1] === newBoard[4] && newBoard[1] === newBoard[7] && newBoard[1] === newTurn ? true : false;
+	}
+	
+	verticalRight(newBoard, newTurn){
+	  return newBoard[2] === newBoard[5] && newBoard[2] === newBoard[8] && newBoard[2] === newTurn ? true : false;
+	}
+	
+	diagonal1(newBoard, newTurn){
+	  return newBoard[0] === newBoard[4] && newBoard[0] === newBoard[8] && newBoard[0] === newTurn ? true : false;
+	}
+	
+	diagonal2(newBoard, newTurn){
+	  return newBoard[2] === newBoard[4] && newBoard[2] === newBoard[6] && newBoard[2] === newTurn ? true : false;
 	}
 
   availableSpots(newBoard){
-		return newBoard.filter(i => i != 'X' && i != 'O');
+		return newBoard.filter(i => i !== 'X' && i !== 'O');
 	}
 
   compTurn(){
@@ -125,18 +154,18 @@ class App extends Component {
       return <Square 
               value={s}
               index={i}
-              onClick={this.state.message == '' ? this.handleClick : this.clickDummy}
+              onClick={this.state.message === '' ? this.handleClick : this.clickDummy}
               turn={this.state.turn}
               key={i}
             />
     })
     return (
-      <div className="App">
+      <div className='App'>
         <h1>Unbeatable Tic Tac Toe</h1>
-        <div className="board">
+        <div className='board'>
           {squares}
         </div>
-        <button className="button" onClick={this.handleReset}>Reset</button>
+        <button className='button' onClick={this.handleReset}>Reset</button>
         <Message 
           message={this.state.message}
         />
