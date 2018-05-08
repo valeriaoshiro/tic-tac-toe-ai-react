@@ -22,9 +22,9 @@ class App extends Component {
       let newTurn = 'X';
       newBoard[index] = newTurn;
 
-      if(!this.isItDone(newBoard, newTurn) && this.availableSpots(newBoard).length === 0){
+      if(!this.winningComb(newBoard, newTurn) && this.availableSpots(newBoard).length === 0){
         this.setState({turn: newTurn, board: newBoard, message: "It's a tie"})
-      } else if(this.isItDone(newBoard, newTurn)) {
+      } else if(this.winningComb(newBoard, newTurn)) {
         this.setState({turn: newTurn, board: newBoard, message: 'You won'});
       } else {
         this.setState({board: newBoard, turn: "O"}, this.compTurn);
@@ -33,13 +33,6 @@ class App extends Component {
   }
 
 	clickDummy(){}
-
-  isItDone(newBoard, newTurn){
-		if(this.winningComb(newBoard, newTurn)){
-			return true;
-		} 
-		return false;
-	}
 
   winningComb(newBoard, newTurn){
 		if(newBoard[0] === newBoard[1] && newBoard[0] === newBoard[2] && newBoard[0] === newTurn ||
@@ -67,9 +60,9 @@ class App extends Component {
 		setTimeout(()=>{
       newBoard[spot] = newTurn;
 			this.setState({board: newBoard});
-			if(!this.isItDone(newBoard, newTurn) && this.availableSpots(newBoard).length === 0){
+			if(!this.winningComb(newBoard, newTurn) && this.availableSpots(newBoard).length === 0){
         this.setState({turn: newTurn, board: newBoard, message: "It's a tie"})
-      } else if(this.isItDone(newBoard, newTurn)) {
+      } else if(this.winningComb(newBoard, newTurn)) {
         this.setState({turn: newTurn, board: newBoard, message: 'You lost'});
       } else {
         this.setState({board: newBoard, turn: "X"})
