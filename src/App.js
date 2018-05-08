@@ -109,11 +109,11 @@ class App extends Component {
     		move.index = newBoard[spot];
     		newBoard[spot] = newTurn; 
 
-    		if(newTurn == 'O'){
-    			var g = this.minimax(newBoard, 'X');
+    		if(newTurn === 'O'){
+    			let g = this.minimax(newBoard, 'X');
       			move.score = g.score;
     		} else {
-    			var g = this.minimax(newBoard, 'O');
+    			let g = this.minimax(newBoard, 'O');
       			move.score = g.score;
     		}
     		newBoard[spot] = move.index;
@@ -121,8 +121,8 @@ class App extends Component {
   		});
 
   		var bestMove;
-  		if (newTurn == 'O') {
-    		var bestScore = -10000;
+  		if (newTurn === 'O') {
+    		let bestScore = -10000;
     		moves.forEach((move, i) => {
     			if (move.score > bestScore) {
         			bestScore = move.score;
@@ -130,7 +130,7 @@ class App extends Component {
       			}
     		});
   		} else {
-    		var bestScore = 10000;
+    		let bestScore = 10000;
     		moves.forEach((move, i) => {
     			if (move.score < bestScore) {
         			bestScore = move.score;
