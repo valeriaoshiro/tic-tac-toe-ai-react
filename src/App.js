@@ -57,7 +57,7 @@ class App extends Component {
     let newBoard = this.state.board.slice();
     let newTurn = 'O';
 		let spot = this.minimax(newBoard, newTurn).index;
-		setTimeout(()=>{
+		
       newBoard[spot] = newTurn;
 			this.setState({board: newBoard});
 			if(!this.winningComb(newBoard, newTurn) && this.availableSpots(newBoard).length === 0){
@@ -67,7 +67,6 @@ class App extends Component {
       } else {
         this.setState({board: newBoard, turn: "X"})
       }
-		}, 500);
 	}
 
   minimax(newBoard, newTurn){	
