@@ -20,7 +20,6 @@ class App extends Component {
 
     handleClick(index) {
         if (this.state.board[index] !== 'X' && this.state.board[index] !== 'O') {
-            // humanTurn(this.state.board, 'X');
             let newBoard = this.state.board.slice();
             let newTurn = 'X';
             newBoard[index] = newTurn;
@@ -29,18 +28,16 @@ class App extends Component {
                 turn: updated[0],
                 board: updated[1],
                 message: updated[2]
-            }, () => { 
+            }, () => {
                 let compUpdated = this.ttt.compTurn(this.state.board);
                 this.setState({
                     turn: compUpdated[0],
                     board: compUpdated[1],
                     message: compUpdated[2]
                 })
-            }) 
+            })
         }
     }
-
-    clickDummy() {}
 
     handleReset(e) {
         e.preventDefault();
@@ -50,6 +47,8 @@ class App extends Component {
             message: this.ttt.message
         });
     }
+
+    clickDummy() {}
 
     render() {
         const squares = this.state.board.map((s, i) => {
