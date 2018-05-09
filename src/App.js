@@ -20,6 +20,7 @@ class App extends Component {
 
     handleClick(index) {
         if (this.state.board[index] !== 'X' && this.state.board[index] !== 'O') {
+            // humanTurn(this.state.board, 'X');
             let newBoard = this.state.board.slice();
             let newTurn = 'X';
             newBoard[index] = newTurn;
@@ -34,7 +35,7 @@ class App extends Component {
                 board: newBoard,
                 message: newTurn === 'O' ? 'You lost' : 'You won'
             });
-        } else if (!this.winningComb(newBoard, newTurn) && this.availableSpots(newBoard).length === 0) {
+        } else if (!this.winningComb(newBoard, newTurn) && this.ttt.availableSpots(newBoard).length === 0) {
             this.setState({
                 turn: newTurn,
                 board: newBoard,
@@ -99,9 +100,9 @@ class App extends Component {
         return newBoard[2] === newBoard[4] && newBoard[2] === newBoard[6] && newBoard[2] === newTurn ? true : false;
     }
 
-    availableSpots(newBoard) {
-        return newBoard.filter(i => i !== 'X' && i !== 'O');
-    }
+    // availableSpots(newBoard) {
+    //     return newBoard.filter(i => i !== 'X' && i !== 'O');
+    // }
 
     compTurn() {
         let newBoard = this.state.board.slice();
@@ -112,7 +113,7 @@ class App extends Component {
     }
 
     minimax(newBoard, newTurn) {
-        let availSpots = this.availableSpots(newBoard);
+        let availSpots = this.ttt.availableSpots(newBoard);
         if (this.winningComb(newBoard, 'X')) {
             return {
                 score: -10
@@ -161,9 +162,6 @@ class App extends Component {
 
     handleReset(e) {
         e.preventDefault();
-        // const turn = 'X';
-        // const board = [0, 1, 2, 3, 4, 5, 6, 7, 8];
-        // const message = '';
         this.setState({
             turn: this.ttt.turn,
             board: this.ttt.board,
