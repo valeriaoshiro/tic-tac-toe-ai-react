@@ -161,13 +161,13 @@ class App extends Component {
 
     handleReset(e) {
         e.preventDefault();
-        const turn = 'X';
-        const board = [0, 1, 2, 3, 4, 5, 6, 7, 8];
-        const message = '';
+        // const turn = 'X';
+        // const board = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+        // const message = '';
         this.setState({
-            turn,
-            board,
-            message
+            turn: this.ttt.turn,
+            board: this.ttt.board,
+            message: this.ttt.message
         });
     }
 
