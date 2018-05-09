@@ -115,4 +115,11 @@ TTT.prototype.minimax = function(newBoard, newTurn) {
     return moves[bestMove];
 }
 
+TTT.prototype.compTurn = function(newBoard) {
+    let newTurn = 'O';
+    let spot = this.minimax(newBoard, newTurn).index;
+    newBoard[spot] = newTurn;
+    return this.updateTurn(newBoard, newTurn);
+}
+
 export default TTT;

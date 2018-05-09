@@ -29,28 +29,18 @@ class App extends Component {
                 turn: updated[0],
                 board: updated[1],
                 message: updated[2]
-            }, this.compTurn) 
+            }, () => { 
+                let compUpdated = this.ttt.compTurn(this.state.board);
+                this.setState({
+                    turn: compUpdated[0],
+                    board: compUpdated[1],
+                    message: compUpdated[2]
+                })
+            }) 
         }
     }
 
-    
-
     clickDummy() {}
-
-    compTurn() {
-        let newBoard = this.state.board.slice();
-        let newTurn = 'O';
-        let spot = this.ttt.minimax(newBoard, newTurn).index;
-        newBoard[spot] = newTurn;
-        let updated = this.ttt.updateTurn(newBoard, newTurn);
-            this.setState({
-                turn: updated[0],
-                board: updated[1],
-                message: updated[2]
-            }) 
-    }
-
-    
 
     handleReset(e) {
         e.preventDefault();
