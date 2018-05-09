@@ -24,92 +24,30 @@ class App extends Component {
             let newBoard = this.state.board.slice();
             let newTurn = 'X';
             newBoard[index] = newTurn;
-            this.updateTurn(newBoard, newTurn);
+            let updated = this.ttt.updateTurn(newBoard, newTurn);
+            this.setState({
+                turn: updated[0],
+                board: updated[1],
+                message: updated[2]
+            }, this.compTurn) 
         }
     }
 
-    updateTurn(newBoard, newTurn) {
-        if (this.ttt.winningComb(newBoard, newTurn)) {
-            this.setState({
-                turn: newTurn,
-                board: newBoard,
-                message: newTurn === 'O' ? 'You lost' : 'You won'
-            });
-        } else if (!this.ttt.winningComb(newBoard, newTurn) && this.ttt.availableSpots(newBoard).length === 0) {
-            this.setState({
-                turn: newTurn,
-                board: newBoard,
-                message: 'It\'s a tie'
-            })
-        } else {
-            newTurn === 'O' ? 
-                this.setState({
-                    board: newBoard,
-                    turn: 'X'
-                }) 
-                : this.setState({
-                    board: newBoard,
-                    turn: 'O'
-                }, this.compTurn);
-        }
-    }
+    
 
     clickDummy() {}
-
-    // winningComb(newBoard, newTurn) {
-    //     return (
-    //         this.horizontalTop(newBoard, newTurn) ||
-    //         this.horizontalMiddle(newBoard, newTurn) ||
-    //         this.horizontalBottom(newBoard, newTurn) ||
-    //         this.verticalLeft(newBoard, newTurn) ||
-    //         this.verticalMiddle(newBoard, newTurn) ||
-    //         this.verticalRight(newBoard, newTurn) ||
-    //         this.diagonal1(newBoard, newTurn) ||
-    //         this.diagonal2(newBoard, newTurn)) ? true : false;
-    // }
-
-    // horizontalTop(newBoard, newTurn) {
-    //     return newBoard[0] === newBoard[1] && newBoard[0] === newBoard[2] && newBoard[0] === newTurn ? true : false;
-    // }
-
-    // horizontalMiddle(newBoard, newTurn) {
-    //     return newBoard[3] === newBoard[4] && newBoard[3] === newBoard[5] && newBoard[3] === newTurn ? true : false;
-    // }
-
-    // horizontalBottom(newBoard, newTurn) {
-    //     return newBoard[6] === newBoard[7] && newBoard[6] === newBoard[8] && newBoard[6] === newTurn ? true : false;
-    // }
-
-    // verticalLeft(newBoard, newTurn) {
-    //     return newBoard[0] === newBoard[3] && newBoard[0] === newBoard[6] && newBoard[0] === newTurn ? true : false;
-    // }
-
-    // verticalMiddle(newBoard, newTurn) {
-    //     return newBoard[1] === newBoard[4] && newBoard[1] === newBoard[7] && newBoard[1] === newTurn ? true : false;
-    // }
-
-    // verticalRight(newBoard, newTurn) {
-    //     return newBoard[2] === newBoard[5] && newBoard[2] === newBoard[8] && newBoard[2] === newTurn ? true : false;
-    // }
-
-    // diagonal1(newBoard, newTurn) {
-    //     return newBoard[0] === newBoard[4] && newBoard[0] === newBoard[8] && newBoard[0] === newTurn ? true : false;
-    // }
-
-    // diagonal2(newBoard, newTurn) {
-    //     return newBoard[2] === newBoard[4] && newBoard[2] === newBoard[6] && newBoard[2] === newTurn ? true : false;
-    // }
-
-    // availableSpots(newBoard) {
-    //     return newBoard.filter(i => i !== 'X' && i !== 'O');
-    // }
 
     compTurn() {
         let newBoard = this.state.board.slice();
         let newTurn = 'O';
         let spot = this.minimax(newBoard, newTurn).index;
         newBoard[spot] = newTurn;
-        this.updateTurn(newBoard, newTurn);
+        let updated = this.ttt.updateTurn(newBoard, newTurn);
+            this.setState({
+                turn: updated[0],
+                board: updated[1],
+                message: updated[2]
+            }) 
     }
 
     minimax(newBoard, newTurn) {
