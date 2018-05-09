@@ -29,13 +29,13 @@ class App extends Component {
     }
 
     updateTurn(newBoard, newTurn) {
-        if (this.winningComb(newBoard, newTurn)) {
+        if (this.ttt.winningComb(newBoard, newTurn)) {
             this.setState({
                 turn: newTurn,
                 board: newBoard,
                 message: newTurn === 'O' ? 'You lost' : 'You won'
             });
-        } else if (!this.winningComb(newBoard, newTurn) && this.ttt.availableSpots(newBoard).length === 0) {
+        } else if (!this.ttt.winningComb(newBoard, newTurn) && this.ttt.availableSpots(newBoard).length === 0) {
             this.setState({
                 turn: newTurn,
                 board: newBoard,
@@ -56,49 +56,49 @@ class App extends Component {
 
     clickDummy() {}
 
-    winningComb(newBoard, newTurn) {
-        return (
-            this.horizontalTop(newBoard, newTurn) ||
-            this.horizontalMiddle(newBoard, newTurn) ||
-            this.horizontalBottom(newBoard, newTurn) ||
-            this.verticalLeft(newBoard, newTurn) ||
-            this.verticalMiddle(newBoard, newTurn) ||
-            this.verticalRight(newBoard, newTurn) ||
-            this.diagonal1(newBoard, newTurn) ||
-            this.diagonal2(newBoard, newTurn)) ? true : false;
-    }
+    // winningComb(newBoard, newTurn) {
+    //     return (
+    //         this.horizontalTop(newBoard, newTurn) ||
+    //         this.horizontalMiddle(newBoard, newTurn) ||
+    //         this.horizontalBottom(newBoard, newTurn) ||
+    //         this.verticalLeft(newBoard, newTurn) ||
+    //         this.verticalMiddle(newBoard, newTurn) ||
+    //         this.verticalRight(newBoard, newTurn) ||
+    //         this.diagonal1(newBoard, newTurn) ||
+    //         this.diagonal2(newBoard, newTurn)) ? true : false;
+    // }
 
-    horizontalTop(newBoard, newTurn) {
-        return newBoard[0] === newBoard[1] && newBoard[0] === newBoard[2] && newBoard[0] === newTurn ? true : false;
-    }
+    // horizontalTop(newBoard, newTurn) {
+    //     return newBoard[0] === newBoard[1] && newBoard[0] === newBoard[2] && newBoard[0] === newTurn ? true : false;
+    // }
 
-    horizontalMiddle(newBoard, newTurn) {
-        return newBoard[3] === newBoard[4] && newBoard[3] === newBoard[5] && newBoard[3] === newTurn ? true : false;
-    }
+    // horizontalMiddle(newBoard, newTurn) {
+    //     return newBoard[3] === newBoard[4] && newBoard[3] === newBoard[5] && newBoard[3] === newTurn ? true : false;
+    // }
 
-    horizontalBottom(newBoard, newTurn) {
-        return newBoard[6] === newBoard[7] && newBoard[6] === newBoard[8] && newBoard[6] === newTurn ? true : false;
-    }
+    // horizontalBottom(newBoard, newTurn) {
+    //     return newBoard[6] === newBoard[7] && newBoard[6] === newBoard[8] && newBoard[6] === newTurn ? true : false;
+    // }
 
-    verticalLeft(newBoard, newTurn) {
-        return newBoard[0] === newBoard[3] && newBoard[0] === newBoard[6] && newBoard[0] === newTurn ? true : false;
-    }
+    // verticalLeft(newBoard, newTurn) {
+    //     return newBoard[0] === newBoard[3] && newBoard[0] === newBoard[6] && newBoard[0] === newTurn ? true : false;
+    // }
 
-    verticalMiddle(newBoard, newTurn) {
-        return newBoard[1] === newBoard[4] && newBoard[1] === newBoard[7] && newBoard[1] === newTurn ? true : false;
-    }
+    // verticalMiddle(newBoard, newTurn) {
+    //     return newBoard[1] === newBoard[4] && newBoard[1] === newBoard[7] && newBoard[1] === newTurn ? true : false;
+    // }
 
-    verticalRight(newBoard, newTurn) {
-        return newBoard[2] === newBoard[5] && newBoard[2] === newBoard[8] && newBoard[2] === newTurn ? true : false;
-    }
+    // verticalRight(newBoard, newTurn) {
+    //     return newBoard[2] === newBoard[5] && newBoard[2] === newBoard[8] && newBoard[2] === newTurn ? true : false;
+    // }
 
-    diagonal1(newBoard, newTurn) {
-        return newBoard[0] === newBoard[4] && newBoard[0] === newBoard[8] && newBoard[0] === newTurn ? true : false;
-    }
+    // diagonal1(newBoard, newTurn) {
+    //     return newBoard[0] === newBoard[4] && newBoard[0] === newBoard[8] && newBoard[0] === newTurn ? true : false;
+    // }
 
-    diagonal2(newBoard, newTurn) {
-        return newBoard[2] === newBoard[4] && newBoard[2] === newBoard[6] && newBoard[2] === newTurn ? true : false;
-    }
+    // diagonal2(newBoard, newTurn) {
+    //     return newBoard[2] === newBoard[4] && newBoard[2] === newBoard[6] && newBoard[2] === newTurn ? true : false;
+    // }
 
     // availableSpots(newBoard) {
     //     return newBoard.filter(i => i !== 'X' && i !== 'O');
@@ -114,11 +114,11 @@ class App extends Component {
 
     minimax(newBoard, newTurn) {
         let availSpots = this.ttt.availableSpots(newBoard);
-        if (this.winningComb(newBoard, 'X')) {
+        if (this.ttt.winningComb(newBoard, 'X')) {
             return {
                 score: -10
             };
-        } else if (this.winningComb(newBoard, 'O')) {
+        } else if (this.ttt.winningComb(newBoard, 'O')) {
             return {
                 score: 10
             };
