@@ -67,4 +67,52 @@ TTT.prototype.updateTurn = function(newBoard, newTurn) {
     }
 }
 
+TTT.prototype.minimax = function(newBoard, newTurn) {
+    let availSpots = this.availableSpots(newBoard);
+    if (this.winningComb(newBoard, 'X')) {
+        return {
+            score: -10
+        };
+    } else if (this.winningComb(newBoard, 'O')) {
+        return {
+            score: 10
+        };
+    } else if (availSpots.length === 0) {
+        return {
+            score: 0
+        };
+    }
+
+    var moves = [];
+    availSpots.forEach(spot => {
+        var move = {};
+        move.index = newBoard[spot];
+        newBoard[spot] = newTurn;
+        let g = newTurn === 'O' ? this.minimax(newBoard, 'X') : this.minimax(newBoard, 'O');
+        move.score = g.score;
+        newBoard[spot] = move.index;
+        moves.push(move);
+    });
+
+    var bestMove;
+    if (newTurn === 'O') {
+        let bestScore = -10000;
+        moves.forEach((move, i) => {
+            if (move.score > bestScore) {
+                bestScore = move.score;
+                bestMove = i;
+            }
+        });
+    } else {
+        let bestScore = 10000;
+        moves.forEach((move, i) => {
+            if (move.score < bestScore) {
+                bestScore = move.score;
+                bestMove = i;
+            }
+        });
+    }
+    return moves[bestMove];
+}
+
 export default TTT;

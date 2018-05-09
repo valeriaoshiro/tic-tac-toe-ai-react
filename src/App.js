@@ -40,7 +40,7 @@ class App extends Component {
     compTurn() {
         let newBoard = this.state.board.slice();
         let newTurn = 'O';
-        let spot = this.minimax(newBoard, newTurn).index;
+        let spot = this.ttt.minimax(newBoard, newTurn).index;
         newBoard[spot] = newTurn;
         let updated = this.ttt.updateTurn(newBoard, newTurn);
             this.setState({
@@ -50,53 +50,7 @@ class App extends Component {
             }) 
     }
 
-    minimax(newBoard, newTurn) {
-        let availSpots = this.ttt.availableSpots(newBoard);
-        if (this.ttt.winningComb(newBoard, 'X')) {
-            return {
-                score: -10
-            };
-        } else if (this.ttt.winningComb(newBoard, 'O')) {
-            return {
-                score: 10
-            };
-        } else if (availSpots.length === 0) {
-            return {
-                score: 0
-            };
-        }
-
-        var moves = [];
-        availSpots.forEach(spot => {
-            var move = {};
-            move.index = newBoard[spot];
-            newBoard[spot] = newTurn;
-            let g = newTurn === 'O' ? this.minimax(newBoard, 'X') : this.minimax(newBoard, 'O');
-            move.score = g.score;
-            newBoard[spot] = move.index;
-            moves.push(move);
-        });
-
-        var bestMove;
-        if (newTurn === 'O') {
-            let bestScore = -10000;
-            moves.forEach((move, i) => {
-                if (move.score > bestScore) {
-                    bestScore = move.score;
-                    bestMove = i;
-                }
-            });
-        } else {
-            let bestScore = 10000;
-            moves.forEach((move, i) => {
-                if (move.score < bestScore) {
-                    bestScore = move.score;
-                    bestMove = i;
-                }
-            });
-        }
-        return moves[bestMove];
-    }
+    
 
     handleReset(e) {
         e.preventDefault();
