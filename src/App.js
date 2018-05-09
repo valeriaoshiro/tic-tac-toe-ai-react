@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
 import Square from './Square';
 import Message from './Message';
+import TTT from './TTT';
 import './App.css';
 
 class App extends Component {
     constructor(props) {
         super(props);
+        this.ttt = new TTT();
         this.state = {
-            turn: 'X',
-            board: [0, 1, 2, 3, 4, 5, 6, 7, 8],
-            message: ''
+            turn: this.ttt.turn,
+            board: this.ttt.board,
+            message: this.ttt.message
         }
         this.handleClick = this.handleClick.bind(this);
         this.handleReset = this.handleReset.bind(this);
